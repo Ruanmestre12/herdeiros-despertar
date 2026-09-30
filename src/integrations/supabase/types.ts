@@ -122,6 +122,7 @@ export type Database = {
           esquiva: number
           hidden: boolean
           id: string
+          initiative: number | null
           kind: string
           mente: number
           name: string
@@ -140,6 +141,7 @@ export type Database = {
           esquiva?: number
           hidden?: boolean
           id?: string
+          initiative?: number | null
           kind?: string
           mente?: number
           name?: string
@@ -158,6 +160,7 @@ export type Database = {
           esquiva?: number
           hidden?: boolean
           id?: string
+          initiative?: number | null
           kind?: string
           mente?: number
           name?: string
@@ -197,6 +200,7 @@ export type Database = {
       }
       sheets: {
         Row: {
+          abilities: Json
           concept: string
           corpo: number
           created_at: string
@@ -204,6 +208,7 @@ export type Database = {
           exhaustion: number
           gs: number
           id: string
+          initiative: number | null
           inventory: Json
           karma: number
           lineage: string
@@ -219,8 +224,11 @@ export type Database = {
           sync: Json
           user_id: string
           weapon: string
+          weapon_dice: string
+          weapon_type: string
         }
         Insert: {
+          abilities?: Json
           concept?: string
           corpo?: number
           created_at?: string
@@ -228,6 +236,7 @@ export type Database = {
           exhaustion?: number
           gs?: number
           id?: string
+          initiative?: number | null
           inventory?: Json
           karma?: number
           lineage?: string
@@ -243,8 +252,11 @@ export type Database = {
           sync?: Json
           user_id?: string
           weapon?: string
+          weapon_dice?: string
+          weapon_type?: string
         }
         Update: {
+          abilities?: Json
           concept?: string
           corpo?: number
           created_at?: string
@@ -252,6 +264,7 @@ export type Database = {
           exhaustion?: number
           gs?: number
           id?: string
+          initiative?: number | null
           inventory?: Json
           karma?: number
           lineage?: string
@@ -267,6 +280,8 @@ export type Database = {
           sync?: Json
           user_id?: string
           weapon?: string
+          weapon_dice?: string
+          weapon_type?: string
         }
         Relationships: []
       }
@@ -276,9 +291,19 @@ export type Database = {
     }
     Functions: {
       is_campaign_master: { Args: { p_campaign: string }; Returns: boolean }
+      is_master_of_sheet: { Args: { p_sheet: string }; Returns: boolean }
       join_campaign: {
         Args: { p_code: string; p_password: string }
         Returns: string
+      }
+      master_update_sheet: {
+        Args: {
+          p_clear_initiative?: boolean
+          p_pf: number
+          p_pv: number
+          p_sheet: string
+        }
+        Returns: undefined
       }
       set_campaign_password: {
         Args: { p_campaign: string; p_password: string }

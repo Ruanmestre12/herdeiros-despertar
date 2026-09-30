@@ -14,13 +14,276 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      campaign_members: {
+        Row: {
+          campaign_id: string
+          character_id: string | null
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          campaign_id: string
+          character_id?: string | null
+          joined_at?: string
+          user_id?: string
+        }
+        Update: {
+          campaign_id?: string
+          character_id?: string | null
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_members_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_members_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "sheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_secrets: {
+        Row: {
+          campaign_id: string
+          password_hash: string
+        }
+        Insert: {
+          campaign_id: string
+          password_hash: string
+        }
+        Update: {
+          campaign_id?: string
+          password_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_secrets_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: true
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          code: string
+          combat_active: boolean
+          created_at: string
+          id: string
+          log: Json
+          master_id: string
+          name: string
+          round: number
+          scene: string
+          turn_index: number
+        }
+        Insert: {
+          code?: string
+          combat_active?: boolean
+          created_at?: string
+          id?: string
+          log?: Json
+          master_id?: string
+          name?: string
+          round?: number
+          scene?: string
+          turn_index?: number
+        }
+        Update: {
+          code?: string
+          combat_active?: boolean
+          created_at?: string
+          id?: string
+          log?: Json
+          master_id?: string
+          name?: string
+          round?: number
+          scene?: string
+          turn_index?: number
+        }
+        Relationships: []
+      }
+      npcs: {
+        Row: {
+          bloqueio: number
+          campaign_id: string
+          corpo: number
+          created_at: string
+          espirito: number
+          esquiva: number
+          hidden: boolean
+          id: string
+          kind: string
+          mente: number
+          name: string
+          notes: string
+          pf_current: number
+          pf_max: number
+          pv_current: number
+          pv_max: number
+        }
+        Insert: {
+          bloqueio?: number
+          campaign_id: string
+          corpo?: number
+          created_at?: string
+          espirito?: number
+          esquiva?: number
+          hidden?: boolean
+          id?: string
+          kind?: string
+          mente?: number
+          name?: string
+          notes?: string
+          pf_current?: number
+          pf_max?: number
+          pv_current?: number
+          pv_max?: number
+        }
+        Update: {
+          bloqueio?: number
+          campaign_id?: string
+          corpo?: number
+          created_at?: string
+          espirito?: number
+          esquiva?: number
+          hidden?: boolean
+          id?: string
+          kind?: string
+          mente?: number
+          name?: string
+          notes?: string
+          pf_current?: number
+          pf_max?: number
+          pv_current?: number
+          pv_max?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "npcs_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      sheets: {
+        Row: {
+          concept: string
+          corpo: number
+          created_at: string
+          espirito: number
+          exhaustion: number
+          gs: number
+          id: string
+          inventory: Json
+          karma: number
+          lineage: string
+          mente: number
+          name: string
+          nomenclatures: Json
+          pf_current: number
+          pf_max: number
+          pv_current: number
+          pv_max: number
+          stage: string
+          story: string
+          sync: Json
+          user_id: string
+          weapon: string
+        }
+        Insert: {
+          concept?: string
+          corpo?: number
+          created_at?: string
+          espirito?: number
+          exhaustion?: number
+          gs?: number
+          id?: string
+          inventory?: Json
+          karma?: number
+          lineage?: string
+          mente?: number
+          name?: string
+          nomenclatures?: Json
+          pf_current?: number
+          pf_max?: number
+          pv_current?: number
+          pv_max?: number
+          stage?: string
+          story?: string
+          sync?: Json
+          user_id?: string
+          weapon?: string
+        }
+        Update: {
+          concept?: string
+          corpo?: number
+          created_at?: string
+          espirito?: number
+          exhaustion?: number
+          gs?: number
+          id?: string
+          inventory?: Json
+          karma?: number
+          lineage?: string
+          mente?: number
+          name?: string
+          nomenclatures?: Json
+          pf_current?: number
+          pf_max?: number
+          pv_current?: number
+          pv_max?: number
+          stage?: string
+          story?: string
+          sync?: Json
+          user_id?: string
+          weapon?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_campaign_master: { Args: { p_campaign: string }; Returns: boolean }
+      join_campaign: {
+        Args: { p_code: string; p_password: string }
+        Returns: string
+      }
+      set_campaign_password: {
+        Args: { p_campaign: string; p_password: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

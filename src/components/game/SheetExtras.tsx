@@ -51,7 +51,7 @@ export function GakiPassive({ character, update, addRoll }: { character: Charact
     {heal && <div className="gaki-grid">
       <Stepper label="DT DO TESTE (MESTRE)" value={dt} min={1} max={40} onChange={setDt} />
       <Button variant="outline" onClick={() => {
-        const r = rollDice(1, dieFor(character.mente))[0]!; const success = r >= dt;
+        const r = rollDice(1, dieFor(character.mente) ?? 4)[0]!; const success = r >= dt;
         setTest({ roll: r, dt, success });
         addRoll({ expression: `1d${dieFor(character.mente)}`, dice: [r], modifier: 0, total: r, source: `Teste de Mente (DT ${dt}) — ${success ? 'sem Karma' : 'acumula Karma'}` });
       }}><Dices /> Teste de Mente (1d{dieFor(character.mente)})</Button>
